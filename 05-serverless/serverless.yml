@@ -1,0 +1,28 @@
+service: hello-world
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: local
+
+functions:
+  helloworld:
+    handler: functions/helloworld.handler
+
+plugins:
+  - serverless-localstack
+
+package:
+  patterns:
+    - '!**'
+    - ./functions/**.js
+
+custom:
+  localstack:
+    stages:
+      - local
+    host: http://ministack
+    edgePort: 4566
